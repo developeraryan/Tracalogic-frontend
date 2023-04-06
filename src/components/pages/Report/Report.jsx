@@ -11,24 +11,35 @@ const Report = () => {
     jobcode: "",
     contactnumber: "",
     inchargename: "",
-    signature: ""
-  }); 
+    signature: "",
+  });
 
-  let handleChange = ({target:{value,name}}) => {
-    setForm({...form,[name]:value})
-    console.log("form is here",form);
-  }
-   
+  let handleChange = ({ target: { value, name } }) => {
+    console.log(name, value);
+    setForm({ ...form, [name]: value });
+    console.log("form is here", form);
+  };
+  let handleCheckboxChange = ({ target: { name, value, checked } }) => {
+    console.log(value, checked, name);
+    if (checked == true) {
+      setForm({ ...form, [name]: value });
+      console.log("form is here", form);
+    } else {
+      setForm({ ...form, [name]: "" });
+    }
+  };
+
   let submitForm = () => {
-    axios.post("http://localhost:4200/pdf",form)
-    .then(res => {
-      console.log("res is here",res);
-      saveAs(res.data,"Report.pdf")
-    })
-    .catch(err => {
-      console.log("err is here",err);
-    })
-  }
+    axios
+      .post("http://localhost:4200/pdf", form)
+      .then((res) => {
+        console.log("res is here", res);
+        saveAs(res.data, "Report.pdf");
+      })
+      .catch((err) => {
+        console.log("err is here", err);
+      });
+  };
 
   return (
     <div className="form-container">
@@ -43,7 +54,7 @@ const Report = () => {
                 type="text"
                 placeholder="Enter Your Name"
                 name="engineername"
-                onChange={(e)=>handleChange(e)}
+                onChange={(e) => handleChange(e)}
               />
             </label>
 
@@ -58,7 +69,7 @@ const Report = () => {
                 type="text"
                 placeholder="Enter Your Job Name"
                 name="jobname"
-                onChange={(e)=>handleChange(e)}
+                onChange={(e) => handleChange(e)}
               />
             </label>
           </div>
@@ -71,7 +82,7 @@ const Report = () => {
                 type="text"
                 name="jobcode"
                 placeholder="Enter Your Job Name"
-                onChange={(e)=>handleChange(e)}
+                onChange={(e) => handleChange(e)}
               />
             </label>
           </div>
@@ -86,7 +97,7 @@ const Report = () => {
                 type="tel"
                 placeholder="+91"
                 name="contactnumber"
-                onChange={(e)=>handleChange(e)}
+                onChange={(e) => handleChange(e)}
               />
             </label>
 
@@ -101,7 +112,7 @@ const Report = () => {
                 type="text"
                 placeholder="Enter Your Incharge Name"
                 name="inchargename"
-                onChange={(e)=>handleChange(e)}
+                onChange={(e) => handleChange(e)}
               />
             </label>
           </div>
@@ -110,56 +121,81 @@ const Report = () => {
         <div className="w-full flex flex-wrap -mx-3 mb-6">
           <div className="flex items-center md:w-1/11 px-3">
             <input
+              onChange={handleCheckboxChange}
+              name="newInstall"
               id="checked-checkbox"
               type="checkbox"
-              value=""
+              value="New Installation"
               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
             />
-            <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+            <label
+              htmlFor="checked-checkbox"
+              className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+            >
               New Installtion
             </label>
           </div>
           <div className="flex items-center md:w-1/11 px-3">
             <input
-              id="checked-checkbox"
+              onChange={handleCheckboxChange}
+              name="reinstall"
+              id="checked-checkbox-2"
               type="checkbox"
-              value=""
+              value="Reinstallation"
               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
             />
-            <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+            <label
+              htmlFor="checked-checkbox-2"
+              className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+            >
               Reinstallation
             </label>
           </div>
           <div className="flex items-center md:w-1/11 px-3">
             <input
-              id="checked-checkbox"
+              onChange={handleCheckboxChange}
+              name="rectification"
+              id="checked-checkbox-3"
               type="checkbox"
-              value=""
+              value="Rectification"
               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
             />
-            <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+            <label
+              htmlFor="checked-checkbox-3"
+              className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+            >
               Rectification
             </label>
           </div>
           <div className="flex items-center md:w-1/11 px-3">
             <input
-              id="checked-checkbox"
+              onChange={handleCheckboxChange}
+              name="kmrTesting"
+              id="checked-checkbox-4"
               type="checkbox"
-              value=""
+              value="KMR Testing"
               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
             />
-            <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+            <label
+              htmlFor="checked-checkbox-4"
+              className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+            >
               KMR Testing
             </label>
           </div>
           <div className="flex items-center md:w-1/11 px-3">
             <input
-              id="checked-checkbox"
+              onChange={handleCheckboxChange}
+              name="hmrTesting"
+              id="checked-checkbox-5"
               type="checkbox"
-              value=""
+              value="HMR Testing"
               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
             />
-            <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+            <label
+              htmlFor="checked-checkbox-5"
+              className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+            >
               HMR Testing
             </label>
           </div>
@@ -170,6 +206,8 @@ const Report = () => {
             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
               Asset Code :
               <input
+                onChange={handleChange}
+                name="assetCode"
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                 id="grid-first-name"
                 type="text"
@@ -183,6 +221,8 @@ const Report = () => {
             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
               Assest Description
               <input
+                onChange={handleChange}
+                name="assetDescription"
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                 id="grid-last-name"
                 type="text"
@@ -194,6 +234,8 @@ const Report = () => {
             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
               Asset Reg. No.
               <input
+                onChange={handleChange}
+                name="assetReg"
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                 id="grid-last-name"
                 type="text"
@@ -207,6 +249,8 @@ const Report = () => {
             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
               Device IMEI No.
               <input
+                onChange={handleChange}
+                name="deviceImei"
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                 id="grid-first-name"
                 type="text"
@@ -220,6 +264,8 @@ const Report = () => {
             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
               SIM No.
               <input
+                onChange={handleChange}
+                name="simNo"
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                 id="grid-last-name"
                 type="text"
@@ -231,6 +277,8 @@ const Report = () => {
             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
               Fuel Sensor Sr. No.
               <input
+                onChange={handleChange}
+                name="fuelSensorNo"
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                 id="grid-last-name"
                 type="text"
@@ -248,9 +296,11 @@ const Report = () => {
               <div className="w-full flex flex-wrap -mx-3 mb-6">
                 <div className="flex items-center md:w-1/3 px-3">
                   <input
+                    onChange={handleCheckboxChange}
+                    name="powerSupplyBattery"
                     id="checked-checkbox"
                     type="checkbox"
-                    value=""
+                    value="Battery"
                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   />
                   <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -259,9 +309,11 @@ const Report = () => {
                 </div>
                 <div className="flex items-center md:w-1/3 px-3">
                   <input
+                    onChange={handleCheckboxChange}
+                    name="powerSupplyAdaptor"
                     id="checked-checkbox"
                     type="checkbox"
-                    value=""
+                    value="Adaptor"
                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   />
                   <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -270,9 +322,11 @@ const Report = () => {
                 </div>
                 <div className="flex items-center md:w-1/3 px-3">
                   <input
+                    onChange={handleCheckboxChange}
+                    name="powerSupplyOther"
                     id="checked-checkbox"
                     type="checkbox"
-                    value=""
+                    value="Other"
                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   />
                   <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -293,9 +347,11 @@ const Report = () => {
               <div className="w-full flex flex-wrap -mx-3 mb-6">
                 <div className="flex items-center md:w-1/3 px-3">
                   <input
+                    onChange={handleCheckboxChange}
+                    name="earthingSupplyBattery"
                     id="checked-checkbox"
                     type="checkbox"
-                    value=""
+                    value="Battery"
                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   />
                   <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -304,9 +360,11 @@ const Report = () => {
                 </div>
                 <div className="flex items-center md:w-1/3 px-3">
                   <input
+                    onChange={handleCheckboxChange}
+                    name="earthingSupplyVehicle"
                     id="checked-checkbox"
                     type="checkbox"
-                    value=""
+                    value="Vehicle Body"
                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   />
                   <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -315,9 +373,11 @@ const Report = () => {
                 </div>
                 <div className="flex items-center md:w-1/3 px-3">
                   <input
+                    onChange={handleCheckboxChange}
+                    name="earthingSupplyOther"
                     id="checked-checkbox"
                     type="checkbox"
-                    value=""
+                    value="Other"
                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   />
                   <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -338,9 +398,11 @@ const Report = () => {
               <div className="w-full flex flex-wrap -mx-3 mb-6">
                 <div className="flex items-center md:w-1/3 px-3">
                   <input
+                    onChange={handleCheckboxChange}
+                    name="earthingConnectionTie"
                     id="checked-checkbox"
                     type="checkbox"
-                    value=""
+                    value="Tie"
                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   />
                   <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -349,9 +411,11 @@ const Report = () => {
                 </div>
                 <div className="flex items-center md:w-1/3 px-3">
                   <input
+                    onChange={handleCheckboxChange}
+                    name="earthingConnectionTape"
                     id="checked-checkbox"
                     type="checkbox"
-                    value=""
+                    value="Tape"
                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   />
                   <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -360,9 +424,11 @@ const Report = () => {
                 </div>
                 <div className="flex items-center md:w-1/3 px-3">
                   <input
+                    onChange={handleCheckboxChange}
+                    name="earthingConnectionThimble"
                     id="checked-checkbox"
                     type="checkbox"
-                    value=""
+                    value="Thimble"
                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   />
                   <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -383,9 +449,11 @@ const Report = () => {
               <div className="w-full flex flex-wrap -mx-3 mb-6">
                 <div className="flex items-center md:w-1/3 px-3">
                   <input
+                    onChange={handleCheckboxChange}
+                    name="ignitionConnectionTie"
                     id="checked-checkbox"
                     type="checkbox"
-                    value=""
+                    value="Tie"
                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   />
                   <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -394,9 +462,11 @@ const Report = () => {
                 </div>
                 <div className="flex items-center md:w-1/3 px-3">
                   <input
+                    onChange={handleCheckboxChange}
+                    name="ignitionConnectionTape"
                     id="checked-checkbox"
                     type="checkbox"
-                    value=""
+                    value="Tape"
                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   />
                   <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -405,9 +475,11 @@ const Report = () => {
                 </div>
                 <div className="flex items-center md:w-1/3 px-3">
                   <input
+                    onChange={handleCheckboxChange}
+                    name="ignitionConnectionThimble"
                     id="checked-checkbox"
                     type="checkbox"
-                    value=""
+                    value="Thimble"
                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   />
                   <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -428,9 +500,11 @@ const Report = () => {
               <div className="w-full flex flex-wrap -mx-3 mb-6">
                 <div className="flex items-center md:w-1/3 px-3">
                   <input
+                    onChange={handleCheckboxChange}
+                    name="RealTimeMatching"
                     id="checked-checkbox"
                     type="checkbox"
-                    value=""
+                    value="Yes"
                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   />
                   <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -439,9 +513,11 @@ const Report = () => {
                 </div>
                 <div className="flex items-center md:w-1/3 px-3">
                   <input
+                    onChange={handleCheckboxChange}
+                    name="RealTimeMatching"
                     id="checked-checkbox"
                     type="checkbox"
-                    value=""
+                    value="No"
                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   />
                   <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -462,9 +538,11 @@ const Report = () => {
               <div className="w-full flex flex-wrap -mx-3 mb-6">
                 <div className="flex items-center md:w-1/3 px-3">
                   <input
+                    onChange={handleCheckboxChange}
+                    name="DeviceMountedSecurely"
                     id="checked-checkbox"
                     type="checkbox"
-                    value=""
+                    value="Yes"
                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   />
                   <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -473,9 +551,11 @@ const Report = () => {
                 </div>
                 <div className="flex items-center md:w-1/3 px-3">
                   <input
+                    onChange={handleCheckboxChange}
+                    name="DeviceMountedSecurely"
                     id="checked-checkbox"
                     type="checkbox"
-                    value=""
+                    value="No"
                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   />
                   <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -496,9 +576,11 @@ const Report = () => {
               <div className="w-full flex flex-wrap -mx-3 mb-6">
                 <div className="flex items-center md:w-1/3 px-3">
                   <input
+                    onChange={handleCheckboxChange}
+                    name=" CableConnectorGatewayTie"
                     id="checked-checkbox"
                     type="checkbox"
-                    value=""
+                    value="Tie"
                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   />
                   <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -507,9 +589,11 @@ const Report = () => {
                 </div>
                 <div className="flex items-center md:w-1/3 px-3">
                   <input
+                    onChange={handleCheckboxChange}
+                    name=" CableConnectorGatewayTape"
                     id="checked-checkbox"
                     type="checkbox"
-                    value=""
+                    value="Tape"
                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   />
                   <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -518,9 +602,11 @@ const Report = () => {
                 </div>
                 <div className="flex items-center md:w-1/3 px-3">
                   <input
+                    onChange={handleCheckboxChange}
+                    name=" CableConnectorGatewayThimble"
                     id="checked-checkbox"
                     type="checkbox"
-                    value=""
+                    value="Thimble"
                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   />
                   <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -541,9 +627,11 @@ const Report = () => {
               <div className="w-full flex flex-wrap -mx-3 mb-6">
                 <div className="flex items-center md:w-1/3 px-3">
                   <input
+                    onChange={handleCheckboxChange}
+                    name="EngineConnectionTiedSecurelyTie"
                     id="checked-checkbox"
                     type="checkbox"
-                    value=""
+                    value="Tie"
                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   />
                   <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -552,9 +640,11 @@ const Report = () => {
                 </div>
                 <div className="flex items-center md:w-1/3 px-3">
                   <input
+                    onChange={handleCheckboxChange}
+                    name="EngineConnectionTiedSecurelyTape"
                     id="checked-checkbox"
                     type="checkbox"
-                    value=""
+                    value="Tape"
                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   />
                   <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -563,9 +653,11 @@ const Report = () => {
                 </div>
                 <div className="flex items-center md:w-1/3 px-3">
                   <input
+                    onChange={handleCheckboxChange}
+                    name="EngineConnectionTiedSecurelyThimble"
                     id="checked-checkbox"
                     type="checkbox"
-                    value=""
+                    value="Thimble"
                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   />
                   <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -587,9 +679,11 @@ const Report = () => {
               <div className="w-full flex flex-wrap -mx-3 mb-6">
                 <div className="flex items-center md:w-1/3 px-3">
                   <input
+                    onChange={handleCheckboxChange}
+                    name="RealTimeMatchingEngine"
                     id="checked-checkbox"
                     type="checkbox"
-                    value=""
+                    value="Yes"
                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   />
                   <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -598,9 +692,11 @@ const Report = () => {
                 </div>
                 <div className="flex items-center md:w-1/3 px-3">
                   <input
+                    onChange={handleCheckboxChange}
+                    name="RealTimeMatchingEngine"
                     id="checked-checkbox"
                     type="checkbox"
-                    value=""
+                    value="No"
                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   />
                   <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -621,9 +717,11 @@ const Report = () => {
               <div className="w-full flex flex-wrap -mx-3 mb-6">
                 <div className="flex items-center md:w-1/3 px-3">
                   <input
+                    onChange={handleCheckboxChange}
+                    name="EngineConnectionsTakenAlternators"
                     id="checked-checkbox"
                     type="checkbox"
-                    value=""
+                    value="Alternator"
                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   />
                   <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -632,9 +730,11 @@ const Report = () => {
                 </div>
                 <div className="flex items-center md:w-1/3 px-3">
                   <input
+                    onChange={handleCheckboxChange}
+                    name="EngineConnectionsTakenOps"
                     id="checked-checkbox"
                     type="checkbox"
-                    value=""
+                    value="Oil Pressure Switch"
                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   />
                   <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -643,9 +743,11 @@ const Report = () => {
                 </div>
                 <div className="flex items-center md:w-1/3 px-3">
                   <input
+                    onChange={handleCheckboxChange}
+                    name="EngineConnectionsTakenBattery"
                     id="checked-checkbox"
                     type="checkbox"
-                    value=""
+                    value="Battery Voltage"
                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   />
                   <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -666,9 +768,11 @@ const Report = () => {
               <div className="w-full flex flex-wrap -mx-3 mb-6">
                 <div className="flex items-center md:w-1/3 px-3">
                   <input
+                    onChange={handleCheckboxChange}
+                    name="TakingPhotographsInstallations"
                     id="checked-checkbox"
                     type="checkbox"
-                    value=""
+                    value="Yes"
                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   />
                   <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -677,9 +781,11 @@ const Report = () => {
                 </div>
                 <div className="flex items-center md:w-1/3 px-3">
                   <input
+                    onChange={handleCheckboxChange}
+                    name="TakingPhotographsInstallations"
                     id="checked-checkbox"
                     type="checkbox"
-                    value=""
+                    value="No"
                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   />
                   <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -707,6 +813,8 @@ const Report = () => {
                       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                         Engine Starting Time
                         <input
+                          onChange={handleChange}
+                          name="hmrMachineEngineStartingTime"
                           className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                           id="grid-first-name"
                           type="text"
@@ -720,6 +828,8 @@ const Report = () => {
                       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                         Engine Stop Time
                         <input
+                          onChange={handleChange}
+                          name="hmrMachineEngineStopTime"
                           className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                           id="grid-last-name"
                           type="text"
@@ -731,6 +841,8 @@ const Report = () => {
                       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                         Starting Meter Reading
                         <input
+                          onChange={handleChange}
+                          name="hmrMachineMeterStartRead"
                           className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                           id="grid-last-name"
                           type="text"
@@ -742,6 +854,8 @@ const Report = () => {
                       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                         End Meter Reading
                         <input
+                          onChange={handleChange}
+                          name="hmrMachineMeterEndRead"
                           className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                           id="grid-last-name"
                           type="text"
@@ -769,6 +883,8 @@ const Report = () => {
                       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                         Engine Starting Time
                         <input
+                          onChange={handleChange}
+                          name="hmrGpsEngineStartingTime"
                           className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                           id="grid-first-name"
                           type="text"
@@ -782,6 +898,8 @@ const Report = () => {
                       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                         Engine Stop Time
                         <input
+                          onChange={handleChange}
+                          name="hmrGpsEngineStopTime"
                           className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                           id="grid-last-name"
                           type="text"
@@ -809,6 +927,8 @@ const Report = () => {
                       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                         Machine Reading
                         <input
+                          onChange={handleChange}
+                          name="hmrTdMachineRead"
                           className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                           id="grid-first-name"
                           type="text"
@@ -822,6 +942,8 @@ const Report = () => {
                       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                         GPS Reading
                         <input
+                          onChange={handleChange}
+                          name="hmrTdGpsRead"
                           className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                           id="grid-last-name"
                           type="text"
@@ -1093,7 +1215,6 @@ const Report = () => {
                   width: 500,
                   height: 200,
                   className: "sigCanvas",
-                  
                 }}
                 onChange="handleChange"
                 name="signature"
@@ -1102,7 +1223,9 @@ const Report = () => {
             </label>
           </div>
         </div>
-        <button className="rounded-none ..." onClick={submitForm}>Save Changes</button>
+        <button className="rounded-none ..." onClick={submitForm}>
+          Save Changes
+        </button>
         {/* 
         <div className="flex flex-wrap -mx-3 mb-2">
           <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
