@@ -13,7 +13,10 @@ const Report = () => {
     inchargename: "",
     signature: "",
   });
-
+  // let trim = () => {
+  //   setForm({trimmedDataURL: this.sigPad.getTrimmedCanvas()
+  //     .toDataURL('image/png')})
+  // }
   let handleChange = ({ target: { value, name } }) => {
     console.log(name, value);
     setForm({ ...form, [name]: value });
@@ -577,7 +580,7 @@ const Report = () => {
                 <div className="flex items-center md:w-1/3 px-3">
                   <input
                     onChange={handleCheckboxChange}
-                    name=" CableConnectorGatewayTie"
+                    name="cableConnectorGatewayTie"
                     id="checked-checkbox"
                     type="checkbox"
                     value="Tie"
@@ -590,7 +593,7 @@ const Report = () => {
                 <div className="flex items-center md:w-1/3 px-3">
                   <input
                     onChange={handleCheckboxChange}
-                    name=" CableConnectorGatewayTape"
+                    name="cableConnectorGatewayTape"
                     id="checked-checkbox"
                     type="checkbox"
                     value="Tape"
@@ -603,7 +606,7 @@ const Report = () => {
                 <div className="flex items-center md:w-1/3 px-3">
                   <input
                     onChange={handleCheckboxChange}
-                    name=" CableConnectorGatewayThimble"
+                    name="cableConnectorGatewayThimble"
                     id="checked-checkbox"
                     type="checkbox"
                     value="Thimble"
@@ -974,6 +977,8 @@ const Report = () => {
                       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                         Engine Starting Time
                         <input
+                          onChange={handleChange}
+                          name="kmrMachineEngineStartTime"
                           className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                           id="grid-first-name"
                           type="text"
@@ -987,6 +992,8 @@ const Report = () => {
                       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                         Engine Stop Time
                         <input
+                          onChange={handleChange}
+                          name="kmrMachineEngineStopTime"
                           className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                           id="grid-last-name"
                           type="text"
@@ -998,6 +1005,8 @@ const Report = () => {
                       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                         Starting Meter Reading
                         <input
+                          onChange={handleChange}
+                          name="kmrMeterReadStart"
                           className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                           id="grid-last-name"
                           type="text"
@@ -1009,6 +1018,8 @@ const Report = () => {
                       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                         End Meter Reading
                         <input
+                          onChange={handleChange}
+                          name="kmrMeterReadEnd"
                           className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                           id="grid-last-name"
                           type="text"
@@ -1037,6 +1048,8 @@ const Report = () => {
                       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                         Starting
                         <input
+                          onChange={handleChange}
+                          name="kmrOtherParamStart"
                           className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                           id="grid-first-name"
                           type="text"
@@ -1050,6 +1063,8 @@ const Report = () => {
                       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                         End
                         <input
+                          onChange={handleChange}
+                          name="kmrOtherParamEnd"
                           className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                           id="grid-last-name"
                           type="text"
@@ -1077,6 +1092,8 @@ const Report = () => {
                       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                         Engine Starting Time
                         <input
+                          onChange={handleChange}
+                          name="kmrGpsParamEngineStart"
                           className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                           id="grid-first-name"
                           type="text"
@@ -1090,6 +1107,8 @@ const Report = () => {
                       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                         Engine Stop Time
                         <input
+                          onChange={handleChange}
+                          name="kmrGpsParamEngineStop"
                           className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                           id="grid-last-name"
                           type="text"
@@ -1117,6 +1136,8 @@ const Report = () => {
                       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                         Machine Reading
                         <input
+                          onChange={handleChange}
+                          name="kmrMachineParamMr"
                           className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                           id="grid-first-name"
                           type="text"
@@ -1130,6 +1151,8 @@ const Report = () => {
                       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                         Other Parameters Reading
                         <input
+                          onChange={handleChange}
+                          name="kmrMachineParamOtherParam"
                           className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                           id="grid-last-name"
                           type="text"
@@ -1141,6 +1164,8 @@ const Report = () => {
                       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                         GPS Reading
                         <input
+                          onChange={handleChange}
+                          name="kmrMachineParamGpsRead"
                           className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                           id="grid-last-name"
                           type="text"
@@ -1160,6 +1185,8 @@ const Report = () => {
         <div>
           <label className="block mb-2 text-sm font-medium">Remark:</label>
           <textarea
+            onChange={handleChange}
+            name="remark"
             id="message"
             rows="4"
             className="block p-2.5 w-full text-sm focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -1172,6 +1199,8 @@ const Report = () => {
             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
               Old Sim No:
               <input
+                onChange={handleChange}
+                name="oldSimNo"
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                 id="grid-first-name"
                 type="text"
@@ -1185,6 +1214,8 @@ const Report = () => {
             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
               Old Device No.
               <input
+                onChange={handleChange}
+                name="oldDeviceNo"
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                 id="grid-last-name"
                 type="text"
