@@ -37,7 +37,8 @@ const Report = () => {
       .post("http://localhost:4200/pdf", form)
       .then((res) => {
         console.log("res is here", res);
-        saveAs(res.data, "Report.pdf");
+        const pdfBlob = new Blob([res.data],  {type:'application/pdf'})
+        saveAs(pdfBlob, "Report.pdf");
       })
       .catch((err) => {
         console.log("err is here", err);
