@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState} from "react";
 import SignatureCanvas from "react-signature-canvas";
 import "./Report.css";
 import axios from "axios";
@@ -33,12 +33,11 @@ const Report = () => {
   };
 
   let submitForm = () => {
-    axios
-      .post("http://localhost:4200/pdf", form)
+    axios.post("http://localhost:4200/pdf", form)
       .then((res) => {
         console.log("res is here", res);
-        const pdfBlob = new Blob([res.data],  {type:'application/pdf'})
-        saveAs(pdfBlob, "Report.pdf");
+        const pdfBlob = new File(res.data,  {type:'application/pdf'})
+        FileSaver.saveAs(pdfBlob, "Report.pdf");
       })
       .catch((err) => {
         console.log("err is here", err);
