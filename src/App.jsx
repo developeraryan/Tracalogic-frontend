@@ -3,12 +3,14 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 import Report from "./components/pages/Report/Report";
+import { CONST } from "./shared/constants";
+
 
 function App() {
   return (
     <div >
       <div className="heading">
-        <h1>TRACALOGIC - SITE ASSET DATA AND DEVICE DATA TESTING REPORT</h1>
+        <h1>{CONST.title}</h1>
       </div>
       <div className="form-container">
         <Report />
