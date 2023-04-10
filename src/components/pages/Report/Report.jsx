@@ -5,9 +5,10 @@ import axios from "axios";
 import { saveAs } from "file-saver";
 import { API } from "../../../shared/api";
 import { CONST } from "../../../shared/constants";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-
-
+  
 const Report = () => {
   let [form, setForm] = useState({
     engineername: "",
@@ -22,6 +23,7 @@ const Report = () => {
   //     .toDataURL('image/png')})
   // }
   let handleChange = ({ target: { value, name } }) => {
+
     console.log(name, value);
     setForm({ ...form, [name]: value });
     console.log("form is here", form);
@@ -44,7 +46,6 @@ const Report = () => {
             type: 'text',
             value: null,
             name: 'engineername'
-          
         },
         {
           label: 'JOB NAME',
@@ -82,20 +83,27 @@ const Report = () => {
     
   }
 
-  let submitForm = () => {
+  let submitForm = (e) => {
+    e.preventDefault();
     axios.post(`${CONST.url}${API.generatePdf}`, form)
       .then((res) => {
-        console.log("res is here", res);
-        const pdfBlob = new File(res.data,  {type:'application/pdf'})
-        FileSaver.saveAs(pdfBlob, "Report.pdf");
+        if(res){
+          if(res.status == 200)toast.success("Success Data Uploaded");
+        console.log("res is here", res.body);
+        const pdfBlob = new Blob(res.body,  {type:'application/pdf'})
+        saveAs(pdfBlob, "Report.pdf");
+      }
       })
       .catch((err) => {
+        toast.error("Error",err);
         console.log("err is here", err);
-      });
+      })
+      
   };
 
   return (
     <div className="form-container">
+    <ToastContainer/>
       <form className="w-full">
         <div className="flex flex-wrap -mx-3 mb-6">
           {/*  mb-6 md:mb-0 */}
