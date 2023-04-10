@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState  } from "react";
 import SignatureCanvas from "react-signature-canvas";
 import "./Report.css";
 import axios from "axios";
@@ -8,7 +8,6 @@ import { CONST } from "../../../shared/constants";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-  
 const Report = () => {
   let [form, setForm] = useState({
     engineername: "",
@@ -23,7 +22,6 @@ const Report = () => {
   //     .toDataURL('image/png')})
   // }
   let handleChange = ({ target: { value, name } }) => {
-
     console.log(name, value);
     setForm({ ...form, [name]: value });
     console.log("form is here", form);
@@ -39,77 +37,75 @@ const Report = () => {
   };
 
   let FORM = {
-      engineername_jobname_jobcode: [
-        {
-            label: 'ENGINEER NAME',
-            placeholder: 'Enter Your Name',
-            type: 'text',
-            value: null,
-            name: 'engineername'
-        },
-        {
-          label: 'JOB NAME',
-          placeholder: 'Enter job name',
-          type: 'text',
-          value: null,
-          name: 'jobname'
+    engineername_jobname_jobcode: [
+      {
+        label: "ENGINEER NAME",
+        placeholder: "Enter Your Name",
+        type: "text",
+        value: null,
+        name: "engineername",
       },
-        {
-          label: 'JOB CODE',
-          placeholder: 'Enter job code',
-          type: 'text',
-          value: null,
-          name: 'jobcode'
-      }
-  
+      {
+        label: "JOB NAME",
+        placeholder: "Enter job name",
+        type: "text",
+        value: null,
+        name: "jobname",
+      },
+      {
+        label: "JOB CODE",
+        placeholder: "Enter job code",
+        type: "text",
+        value: null,
+        name: "jobcode",
+      },
     ],
     contactnumber_inchargename: [
-          {
-            label: 'Contact No',
-            placeholder: 'Enter Contact',
-            type: 'tel',
-            value: null,
-            name: 'contactnumber'
-        },
-        {
-          label: 'Incharge Name',
-          placeholder: 'Enter incharge name',
-          type: 'text',
-          value: null,
-          name: 'inchargename'
-      }
-          
-    ]
-    
-  }
+      {
+        label: "Contact No",
+        placeholder: "Enter Contact",
+        type: "tel",
+        value: null,
+        name: "contactnumber",
+      },
+      {
+        label: "Incharge Name",
+        placeholder: "Enter incharge name",
+        type: "text",
+        value: null,
+        name: "inchargename",
+      },
+    ],
+  };
 
   let submitForm = (e) => {
     e.preventDefault();
-    axios.post(`${CONST.url}${API.generatePdf}`, form)
-      .then((res) => {
-        if(res){
-          if(res.status == 200)toast.success("Success Data Uploaded");
-        console.log("res is here", res.body);
-        const pdfBlob = new Blob(res.body,  {type:'application/pdf'})
-        saveAs(pdfBlob, "Report.pdf");
-      }
-      })
+    axios
+      .post(`${CONST.url}${API.generatePdf}`, form)
+      .then(()=> axios.get(`${CONST.url}${API.fetchPdf}`,{responseType: 'blob'})
+      .then((res) => {  
+          toast.success("Success Data Uploaded");
+          console.log("res is here", res);
+          const pdfBlob = new Blob([res.data], { type: "application/pdf" });
+          saveAs(pdfBlob, "Report.pdf");
+          setTimeout(()=>{
+            window.location.reload();
+          },5000);
+      }))
       .catch((err) => {
-        toast.error("Error",err);
+        toast.error("Error", err);
         console.log("err is here", err);
-      })
-      
+      });
   };
 
   return (
     <div className="form-container">
-    <ToastContainer/>
-      <form className="w-full">
+      <ToastContainer />
+      <form className="w-full" id="">
         <div className="flex flex-wrap -mx-3 mb-6">
           {/*  mb-6 md:mb-0 */}
-          {
-            FORM.engineername_jobname_jobcode.map((form,index) => {
-              return (
+          {FORM.engineername_jobname_jobcode.map((form, index) => {
+            return (
               <div className="w-full md:w-1/3 px-3" key={index}>
                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                   {form.label}
@@ -120,35 +116,32 @@ const Report = () => {
                     placeholder={form.placeholder}
                     name={form.name}
                     onChange={(e) => handleChange(e)}
+                    required
                   />
                 </label>
-             </div>)
-            })
-          }
-         
+              </div>
+            );
+          })}
         </div>
         <div className="flex flex-wrap -mx-3 mb-6">
-            {
-              FORM.contactnumber_inchargename.map((form,index) => {
-                return (
-                  <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0" key={index}>
-                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-                      {form.label}
-                      <input
-                        className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                        id="grid-first-name"
-                        type={form.type}
-                        placeholder={form.placeholder}
-                        name={form.name}
-                        onChange={(e) => handleChange(e)}
-                      />
-                      
-                    </label>
-                </div>
-                )
-              })
-            }
-        
+          {FORM.contactnumber_inchargename.map((form, index) => {
+            return (
+              <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0" key={index}>
+                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                  {form.label}
+                  <input
+                    className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                    id="grid-first-name"
+                    type={form.type}
+                    placeholder={form.placeholder}
+                    name={form.name}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
+                </label>
+              </div>
+            );
+          })}
         </div>
 
         <div className="w-full flex flex-wrap -mx-3 mb-6">
@@ -245,6 +238,7 @@ const Report = () => {
                 id="grid-first-name"
                 type="text"
                 placeholder="Enter Your Assest Code"
+                required
               />
             </label>
 
@@ -260,6 +254,7 @@ const Report = () => {
                 id="grid-last-name"
                 type="text"
                 placeholder="Enter Your Assest Description"
+                required
               />
             </label>
           </div>
@@ -273,6 +268,7 @@ const Report = () => {
                 id="grid-last-name"
                 type="text"
                 placeholder="Enter Your Asset Reg. No."
+                required
               />
             </label>
           </div>
@@ -288,6 +284,7 @@ const Report = () => {
                 id="grid-first-name"
                 type="text"
                 placeholder="Enter Your Device IMEI No."
+                required
               />
             </label>
 
@@ -303,6 +300,7 @@ const Report = () => {
                 id="grid-last-name"
                 type="text"
                 placeholder="Enter Your SIM No."
+                required
               />
             </label>
           </div>
@@ -316,6 +314,7 @@ const Report = () => {
                 id="grid-last-name"
                 type="text"
                 placeholder="Enter Your Fuel Sensor Sr. No."
+                required
               />
             </label>
           </div>
@@ -852,6 +851,7 @@ const Report = () => {
                           id="grid-first-name"
                           type="text"
                           placeholder="Enter Engine Starting Time"
+                          required
                         />
                       </label>
 
@@ -867,6 +867,7 @@ const Report = () => {
                           id="grid-last-name"
                           type="text"
                           placeholder="Enter Engine Stop Time"
+                          required
                         />
                       </label>
                     </div>
@@ -880,6 +881,7 @@ const Report = () => {
                           id="grid-last-name"
                           type="text"
                           placeholder="Enter Starting Meter Reading"
+                          required
                         />
                       </label>
                     </div>
@@ -893,6 +895,7 @@ const Report = () => {
                           id="grid-last-name"
                           type="text"
                           placeholder="Enter End Meter Reading"
+                          required
                         />
                       </label>
                     </div>
@@ -922,6 +925,7 @@ const Report = () => {
                           id="grid-first-name"
                           type="text"
                           placeholder="Enter Engine Starting Time"
+                          required
                         />
                       </label>
 
@@ -937,6 +941,7 @@ const Report = () => {
                           id="grid-last-name"
                           type="text"
                           placeholder="Enter Engine Stop Time"
+                          required
                         />
                       </label>
                     </div>
@@ -966,6 +971,7 @@ const Report = () => {
                           id="grid-first-name"
                           type="text"
                           placeholder="Enter Machine Reading "
+                          required
                         />
                       </label>
 
@@ -981,6 +987,7 @@ const Report = () => {
                           id="grid-last-name"
                           type="text"
                           placeholder="Enter GPS Reading"
+                          required
                         />
                       </label>
                     </div>
@@ -1013,6 +1020,7 @@ const Report = () => {
                           id="grid-first-name"
                           type="text"
                           placeholder="Enter Engine Starting Time"
+                          required
                         />
                       </label>
 
@@ -1028,6 +1036,7 @@ const Report = () => {
                           id="grid-last-name"
                           type="text"
                           placeholder="Enter Engine Stop Time"
+                          required
                         />
                       </label>
                     </div>
@@ -1041,6 +1050,7 @@ const Report = () => {
                           id="grid-last-name"
                           type="text"
                           placeholder="Enter Starting Meter Reading"
+                          required
                         />
                       </label>
                     </div>
@@ -1054,6 +1064,7 @@ const Report = () => {
                           id="grid-last-name"
                           type="text"
                           placeholder="Enter End Meter Reading"
+                          required
                         />
                       </label>
                     </div>
@@ -1084,6 +1095,7 @@ const Report = () => {
                           id="grid-first-name"
                           type="text"
                           placeholder="Enter Starting"
+                          required
                         />
                       </label>
 
@@ -1099,6 +1111,7 @@ const Report = () => {
                           id="grid-last-name"
                           type="text"
                           placeholder="Enter End"
+                          required
                         />
                       </label>
                     </div>
@@ -1128,6 +1141,7 @@ const Report = () => {
                           id="grid-first-name"
                           type="text"
                           placeholder="Enter Engine Starting Time"
+                          required
                         />
                       </label>
 
@@ -1143,6 +1157,7 @@ const Report = () => {
                           id="grid-last-name"
                           type="text"
                           placeholder="Enter Engine Stop Time"
+                          required
                         />
                       </label>
                     </div>
@@ -1172,6 +1187,7 @@ const Report = () => {
                           id="grid-first-name"
                           type="text"
                           placeholder="Enter Machine Reading"
+                          required
                         />
                       </label>
 
@@ -1187,6 +1203,7 @@ const Report = () => {
                           id="grid-last-name"
                           type="text"
                           placeholder="Enter Other Parameters Reading"
+                          required
                         />
                       </label>
                     </div>
@@ -1200,6 +1217,7 @@ const Report = () => {
                           id="grid-last-name"
                           type="text"
                           placeholder="Enter GPS Reading"
+                          required
                         />
                       </label>
                     </div>
@@ -1221,6 +1239,7 @@ const Report = () => {
             rows="4"
             className="block p-2.5 w-full text-sm focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Write your thoughts here..."
+            required
           ></textarea>
         </div>
 
@@ -1235,6 +1254,7 @@ const Report = () => {
                 id="grid-first-name"
                 type="text"
                 placeholder="Enter Your Old Sim No."
+                required
               />
             </label>
 
@@ -1250,6 +1270,7 @@ const Report = () => {
                 id="grid-last-name"
                 type="text"
                 placeholder="Enter Your Old Device No."
+                required
               />
             </label>
           </div>
